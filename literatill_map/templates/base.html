@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- openlayer css file -->
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{% static 'css/ol.css' %}" type="text/css">
+    <!-- local development css file -->
+    <link rel="stylesheet" href="{% static 'css/literatill_maps.css' %}" type="text/css">
+    <style>
+    </style>
+    <title>LiteratillMaps</title>
+  </head>
+  <body>
+
+      {% block content %}
+          
+      {% endblock content %}
+
+
+    <!-- jquery cdn -->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- openlayer js file -->
+    <script src="{% static 'js/ol.js' %}" type="text/javascript"></script>
+    <!-- local development file -->
+    <script src="{% static 'js/literatill_maps.js' %}" type="text/javascript"></script>
+  </body>
+</html>
