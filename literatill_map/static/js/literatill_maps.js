@@ -1,6 +1,7 @@
 /* Create the map */
 // setting up coordinates for map to display
 content = document.getElementById('nav-trigger');
+var infobox = document.getElementById("info");
 
 var city = ol.proj.transform([-73.920935,40.780229], 'EPSG:4326', 'EPSG:3857');
 
@@ -25,33 +26,67 @@ var map = new ol.Map({
 });
 
 
+var Data =
+  [ { name: "foo"
+    , longlat: [-73.927870, 40.763633]
+    }
+  , { name: "foo2"
+    , longlat: [-73.917356, 40.763958]
+    }
+  , { name: "foo3"
+    , longlat: [-73.915530, 40.779665]
+    }
+  , { name: "foo4"
+    , longlat: [-73.916045, 40.779372]
+    }
+  , { name: "foo5"
+    , longlat: [-73.919682, 40.777365]
+    }
+  , { name: "foo6"
+    , longlat: [-73.908980, 40.776013]
+    }
+  ];
+
+
+function buildFeature(data) {
+  return new ol.Feature(
+    { geometry: new ol.geom.Point(ol.proj.fromLonLat(data.longlat))
+    , data: data
+    }
+  );
+}
+
+
+function curryclickonmarker(element) {
+  return function (event) {
+    return clickOnMarker(element, event);
+  }
+}
+
+function clickOnMarker(info, event) {
+  // Ovo je mnogo ruzan nacin da se dolazi do podataka
+  // Treba bolje pogledati OL3 API
+  // I treba imati u vidu kakvu strukturu ti imas
+  // i sta ti treba, ali, resenje along the lines
+  var marker = event.selected[0];
+  var data = marker.G.data;
+
+
+  // I ovde sada feedujes podatke u DOM
+  info.innerHTML = "<h1>"+data.name+"</h1>";
+}
+
+var selectClick = new ol.interaction.Select();
+
+selectClick.on("select", curryclickonmarker(infobox));
 // Setup markers
+
+var features = Data.map(buildFeature);
+
 var markers = new ol.layer.Vector({
   tittle: 'City Apratments',
   source: new ol.source.Vector({
-    features: [
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.927870, 40.763633])),
-      }),
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.917356, 40.763958])),
-      }),
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.915530, 40.779665])),
-      }),
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.916045, 40.779372])),
-      }),
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.919682, 40.777365])),
-      }),
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.908980, 40.776013])),
-      }),
-      new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([-73.917356, 40.763958])),
-      })
-    ]
+    features: features
   }),
   style: new ol.style.Style({
     image: new ol.style.Icon({
@@ -64,10 +99,6 @@ var markers = new ol.layer.Vector({
   })
 });
 map.addLayer(markers);
-
+map.addInteraction(selectClick);
 // Setting up click function for the map
 var content = document.getElementById('nav-trigger');
-map.on('singleclick', function(evt) {
-  var name = map.forEachFeatureAtPixel(evt.pixel, function(feature){
-  });
-});
