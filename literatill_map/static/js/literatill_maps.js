@@ -1,6 +1,5 @@
 /* Create the map */
 // setting up coordinates for map to display
-content = document.getElementById('nav-trigger');
 var infobox = document.getElementById("info");
 
 var city = ol.proj.transform([-73.920935,40.780229], 'EPSG:4326', 'EPSG:3857');
@@ -27,23 +26,41 @@ var map = new ol.Map({
 
 
 var Data =
-  [ { name: "foo"
-    , longlat: [-73.927870, 40.763633]
+  [ { title: "Property 1",
+      address: "Some Random Address 1",
+      image: "/static/img/condo1.jpg",
+      description: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+      longlat: [-73.927870, 40.763633]
     }
-  , { name: "foo2"
-    , longlat: [-73.917356, 40.763958]
+  , { title: "Property 2",
+      address: "Some Random Address 2",
+      image: "static/img/condo2.jpeg",
+      description: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+      longlat: [-73.917356, 40.763958]
     }
-  , { name: "foo3"
-    , longlat: [-73.915530, 40.779665]
+  , { title: "Property 3",
+      address: "Some Random Address 3",
+      image: "static/img/condo3.jpeg",
+      description: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+      longlat: [-73.915530, 40.779665]
     }
-  , { name: "foo4"
-    , longlat: [-73.916045, 40.779372]
+  , { title: "Property 4",
+      address: "Some Random Address 4",
+      image: "static/img/condo4.jpeg",
+      description: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+      longlat: [-73.916045, 40.779372]
     }
-  , { name: "foo5"
-    , longlat: [-73.919682, 40.777365]
+  , { title: "Property 5",
+      address: "Some Random Address 5",
+      image: "static/img/condo5.jpg",
+      description: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+      longlat: [-73.919682, 40.777365]
     }
-  , { name: "foo6"
-    , longlat: [-73.908980, 40.776013]
+  , { title: "Property 6",
+      address: "Some Random Address 6",
+      image: "static/img/condo6.jpg",
+      description: "Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.",
+      longlat: [-73.908980, 40.776013]
     }
   ];
 
@@ -73,7 +90,7 @@ function clickOnMarker(info, event) {
 
 
   // I ovde sada feedujes podatke u DOM
-  info.innerHTML = "<h1>"+data.name+"</h1>";
+  info.innerHTML = "<h1>"+data.title+"</h1><h2><p>Address: "+data.address+"</p></h2><p>Description: "+data.description+"<p><img src="+data.image+"/>";
 }
 
 var selectClick = new ol.interaction.Select();
@@ -100,5 +117,11 @@ var markers = new ol.layer.Vector({
 });
 map.addLayer(markers);
 map.addInteraction(selectClick);
-// Setting up click function for the map
-var content = document.getElementById('nav-trigger');
+
+// Capturing mouse movement on the map
+map.on('pointermove', function(event) {
+    if (evt.dragging) {
+        return; 
+    }
+    // Access coordinates from evt.coordinate now
+});
